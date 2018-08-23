@@ -26,9 +26,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
     }
 
-    // checking here to see if the use gave us permission or not then we scan
+    // checking here to see if the user gave us permission or not then we scan
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways || status == .authorizedWhenInUse || status == .authorized {
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
                     startScanning()
@@ -41,6 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard region is CLBeaconRegion else { return }
 
+        // this is the notification
         let content = UNMutableNotificationContent()
         content.title = "David Porter"
         content.body = "Can you please help?"
@@ -50,7 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 
-    //here we are scanning for the beacons uuid
+    // here we are scanning for the beacons uuid
     func startScanning() {
         let uuid = UUID(uuidString: "9118606C-C0C4-4AF3-9E7E-B839FDA1AB19")!
         let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: 143, minor: 456, identifier: "Samaritan")
