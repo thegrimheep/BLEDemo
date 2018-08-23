@@ -1,1 +1,2 @@
-# BLEDemo is a demonstration of notifications coming from iBeacon
+# BLEDemo
+a demonstration of notifications coming from iBeacon
