@@ -25,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
     }
+
     // checking here to see if the use gave us permission or not then we scan
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways || status == .authorizedWhenInUse || status == .authorized {
@@ -57,8 +58,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startMonitoring(for: beaconRegion)
         locationManager.startRangingBeacons(in: beaconRegion)
     }
-
-
 }
 
 
