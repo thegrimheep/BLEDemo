@@ -16,6 +16,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+    }
+    // checking here to see if the use gave us permission or not then we scan
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways{
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    startScanning()
+                }
+            }
+        }
+    }
+
+    //here we are scanning for the beacons uuid
+    func startScanning() {
+        let uuid = UUID(uuidString: "fake UUID goes here")!
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: 143, minor: 456, identifier: "Samaritan")
+
+        locationManager.startMonitoring(for: beaconRegion)
+        locationManager.startRangingBeacons(in: beaconRegion)
     }
 }
 
